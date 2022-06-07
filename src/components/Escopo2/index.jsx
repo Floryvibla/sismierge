@@ -16,11 +16,9 @@ import {
 import { subItemEscopo2 } from "./selectionData";
 import { style } from "../../utils/util";
 import ComprasEnergiaTermica from "./Subs/ComprasEnergiaTermica";
-
-
+import EletricaLocalizacao from "./Subs/EletricaLocalizacao";
 
 const Escopo2 = ({ openStartInvet, setOpenStartInvet }) => {
-
   let initDataSubEsco2 = {
     eletricidade_localizacao: false,
     perdas_td_localizacao: false,
@@ -35,7 +33,7 @@ const Escopo2 = ({ openStartInvet, setOpenStartInvet }) => {
   const handleClose = () => setOpenStartInvet(false);
 
   const handleEsco2 = (name) => {
- 
+      console.log(name);
     switch (name) {
       case "Eletricidade (Localização)":
         setShowSubEsco2({
@@ -67,10 +65,8 @@ const Escopo2 = ({ openStartInvet, setOpenStartInvet }) => {
           perdas_td_esc_compras: !initDataSubEsco2.perdas_td_esc_compras,
         });
         break;
-      
     }
   };
-
 
   const handleChangeEsco2 = () => {
     setnextEsco1Button(!nextEsco1Button);
@@ -78,6 +74,7 @@ const Escopo2 = ({ openStartInvet, setOpenStartInvet }) => {
     setCurentIdxEsco2("");
   };
 
+  console.log(showSubEsco2);
   return (
     <>
       <Modal
@@ -125,9 +122,18 @@ const Escopo2 = ({ openStartInvet, setOpenStartInvet }) => {
         </Box>
       </Modal>
       {showSubEsco2.compras_energia_termica && (
-    <ComprasEnergiaTermica nextEsco1Button={nextEsco1Button} handleChangeEsco2={handleChangeEsco2} />
+        <ComprasEnergiaTermica
+          nextEsco1Button={nextEsco1Button}
+          handleChangeEsco2={handleChangeEsco2}
+        />
       )}
 
+      {showSubEsco2.eletricidade_localizacao && (
+        <EletricaLocalizacao
+          nextEsco1Button={nextEsco1Button}
+          handleChangeEsco2={handleChangeEsco2}
+        />
+      )}
     </>
   );
 };
