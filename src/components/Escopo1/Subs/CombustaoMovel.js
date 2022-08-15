@@ -139,7 +139,7 @@ const CombustaoMovel = ({ nextEsco1Button, handleChangeEsco1, curentIdxEsco1=0, 
             })}
           </div>
 
-          <Area overflow={true}>
+            <Area overflow={true}>
               {tabelasTipoTransposrte.map((item, index) => (
                 <>
                   <HeaderSelect mb={index !== currentIndexCard && "20px"} onClick={() => handleOpenCard(index)} key={index}>

@@ -271,7 +271,7 @@ function Escopo1Teste({ data, slug, id, escopos, activeCalculate }) {
                                             spaceLeft="20px"
                                         />
                                     }
-                                    {/* {<ButtonAdd onClick={() => handleAddRow("add")} ml={20} mt={30} title={"mais linha"} />} */}
+                                    {<ButtonAdd onClick={() => handleAddRow("add")} ml={20} mt={30} title={"mais linha"} />}
                                 </ContentArea>
 
                                 <ContentArea width="90.8vw" height="50.8vh" >
