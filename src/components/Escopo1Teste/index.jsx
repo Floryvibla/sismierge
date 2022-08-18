@@ -16,7 +16,12 @@ import { toast } from 'react-toastify'
 
 function Escopo1Teste({ data, slug, id, escopos, activeCalculate }) {
     const [itemActive, setItemActive] = useState(null)
-    const dataLocalStorage = JSON.parse(localStorage.getItem(`@sismierge/${id}/${slug}`))
+    const seeMoreOption= ["5208192", "920072706", "1965757995"]
+    const verificationSheetId = seeMoreOption.filter(i => i === slug).length > 0
+
+    const [dataLocalStorage, setDataLocalStorage] = useState(false)
+
+    // const dataLocalStorage = JSON.parse(localStorage.getItem(`@sismierge/${id}/${slug}`))
     const dispatch = useDispatch()
     const { sucessResultSheet, sucessCreateSubEscopo } = useSelector((state) => state.sheet);
     const [indexTable, setIndexTable] = useState(0)
@@ -30,10 +35,14 @@ function Escopo1Teste({ data, slug, id, escopos, activeCalculate }) {
     const [escopoActive, setEscopoActive] = useState(`Escopo ${id}`)
     const navigate = useNavigate()
 
-    const seeMoreOption= ["5208192", "920072706", "1965757995"]
-    const verificationSheetId = seeMoreOption.filter(i => i === slug).length > 0
-
     const verificationSelect = dataSubItem && dataSubItem?.filter(i => i.id == slug)[0]?.items.filter(i => i.title_select && i?.title_select?.length > 0)[0]
+
+    console.log(dataSubItem);
+
+    useEffect(() => {
+      setDataLocalStorage(JSON.parse(localStorage.getItem(`@sismierge/${id}/${slug}`)))
+    }, [dataLocalStorage, typeSubTable, typeTable, dataTable])
+    
 
     const handleDataSelectOptions = () => {
         switch (slug) {
@@ -104,27 +113,29 @@ function Escopo1Teste({ data, slug, id, escopos, activeCalculate }) {
         let newList = []
         let index
 
-        if (verificationSheetId) {
-            if (typeTable) {
+        if (verificationSheetId && verificationSelect) {
+            if (typeTable && typeSubTable) {
                 dataTable?.map(i => i?.tables?.map(t => {
                     // const data = t.items.filter(i => i.type === "entry")
                     // console.log(i.title);    
-                    if (i.title == typeTable) {
+                    if (i.title == typeTable && t.title == typeSubTable) {
                         setRange({range_entry: t.range, range_result: t?.range_result});
                         t.items.map(d => d.items.map(item => {
                             if (d.type === "entry") {
                                 newList= [...newList, {key: item.label, value: "-", index: item.data.length}]
                             }
                         }))
-                        // console.log(newList);
                     }
 
                 }))  
                 dispatch(othersActions.handleSetDataModal({data: newList, range, sendData: handleVerificMoreOptions()}))
                 dispatch(othersActions.handleOpenModal("Adicionar"))
 
+                // console.log(newList);
+
             }else{
-                toast.error("Escolhe um tipo de tabela primeiro")
+                !typeSubTable && toast.error(`Escolhe um tipo de ${verificationSelect?.title_select}`)
+                !typeTable && toast.error("Escolhe um tipo de tabela primeiro")
             }
         } 
         else {
@@ -269,6 +280,7 @@ function Escopo1Teste({ data, slug, id, escopos, activeCalculate }) {
                                             onChange={event => setTypeSubTable(event.target.value)}
                                             width={"25%"}
                                             spaceLeft="20px"
+                                            value={typeSubTable}
                                         />
                                     }
                                     {<ButtonAdd onClick={() => handleAddRow("add")} ml={20} mt={30} title={"mais linha"} />}

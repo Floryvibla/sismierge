@@ -48,7 +48,7 @@ const TableSubItem = ({ titleHeader, rowLength, subHeader, items, range, itemFil
             }))
         }))
 
-        // console.log(newList);
+        console.log(dataItem);
         
         dispatch(othersActions.handleSetDataModal({
             data: newList, 

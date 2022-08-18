@@ -192,6 +192,22 @@ export const fuelUsedEsco1Item = [
   "Alcatrão",
   "Acetileno",
 ];
+export const tipoCombustivelEmissao = [
+  "Etanol Hidratado",
+  "Biodiesel (B100)",
+  "Etanol Anidro",
+  "Carvão Vapor 3100 kcal / kg",
+  "Carvão Vapor 3300 kcal / kg",
+  "Carvão Vapor 3700 kcal / kg",
+  "Carvão Vapor 4200 kcal / kg",
+  "Carvão Vapor 4500 kcal / kg",
+  "Carvão Vapor 4700 kcal / kg",
+  "Carvão Vapor 5200 kcal / kg",
+  "Carvão Vapor 5900 kcal / kg",
+  "Carvão Vapor 6000 kcal / kg",
+  "Carvão Vapor sem Especifica",
+  "Coque de Carvão Mineral"
+]
 
 export const tipoVeiculo = [
   "Automóvel a gasolina",

@@ -7,7 +7,7 @@ import { admin } from '../../../constants/tailwind/colors'
 import Input from '../../Input'
 import { useDispatch, useSelector } from 'react-redux'
 import SelectArea from '../../Select'
-import { fuelUsedEsco1Item, gas, tipoVeiculo } from '../../Escopo1/selectionData'
+import { fuelUsedEsco1Item, gas, tipoCombustivelEmissao, tipoVeiculo } from '../../Escopo1/selectionData'
 import { useParams } from 'react-router-dom'
 
 export function AddItemEscopo({ openModal }) {
@@ -26,6 +26,7 @@ export function AddItemEscopo({ openModal }) {
     const seeMoreOption= ["5208192", "1965757995"]
 
     const dataLocalStorage = localStorage.getItem(`@sismierge/${id}/${slug}`)
+    const verificationSheetId = seeMoreOption.filter(i => i === slug).length > 0
 
     const arrayMonth =[
         "Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez", 
@@ -37,7 +38,11 @@ export function AddItemEscopo({ openModal }) {
                 return fuelUsedEsco1Item
 
             case "Tipo de combustível":
-                return fuelUsedEsco1Item
+                if (slug === "5208192") {
+                    return tipoCombustivelEmissao
+                } else {
+                    return fuelUsedEsco1Item   
+                }
             
             case "Tipo da frota de veículos":
                 return tipoVeiculo
@@ -98,7 +103,7 @@ export function AddItemEscopo({ openModal }) {
         // }
     }
 
-    // console.log(dataModal);
+    console.log(dataModal);
 
     const onSubmit= e => {
         e.preventDefault()
@@ -136,8 +141,6 @@ export function AddItemEscopo({ openModal }) {
         }
     }, [sucessCreateSubEscopo, step, slug])
 
-    console.log(data?.index);
-
     useEffect(() => {
         if (errorResultSheet) {
             dispatch(sheetActions.cleanSheet())
@@ -165,7 +168,9 @@ export function AddItemEscopo({ openModal }) {
             }
             setStep(2)
 
-            localStorage.setItem(`@sismierge/${id}/${slug}`, JSON.stringify(newList))
+            verificationSheetId 
+                ? localStorage.setItem(`@sismierge/${id}/${slug}/${dataModal?.range?.range_result}`, JSON.stringify(newList))
+                : localStorage.setItem(`@sismierge/${id}/${slug}`, JSON.stringify(newList))
         }
     }, [resultSheetData, sucessResultSheet, errorResultSheet])
     
